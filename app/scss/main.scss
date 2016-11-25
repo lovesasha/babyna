@@ -1,0 +1,350 @@
+body {
+	-webkit-app-region: drag;
+}
+
+/* 不可拖动区域及元素 */
+.button, input, img, i, .tab {
+	transition: 0.4s;
+	-webkit-app-region: no-drag;
+}
+.top .basic *, .main, .search-panel *, .bottom * {
+	-webkit-app-region: no-drag;
+}
+/* 可拖动元素 */
+.toolbar img {
+	-webkit-app-region: drag !important;
+}
+
+.container {
+    height: 100%;
+	background-color: #fdfdfd;
+	position: relative;
+}
+
+.top {
+	height: 140px;
+	position: relative;
+	overflow: hidden;
+	background: url(../img/main-bg.png) no-repeat center;
+	background-size: auto 170%;
+
+	.toolbar {
+		overflow: hidden;
+
+		.icon {
+			color: #fff;
+			text-shadow: 0 0 1px #333;
+			padding: 4px 6px;
+			float: left;
+
+			img {
+				width: 16px;
+			}
+			span {
+				font-size: 14px;
+			}
+		}
+		.button {
+			width: 26px;
+			height: 26px;
+			line-height: 26px;
+			color: #fff;
+			font-size: 12px;
+			text-align: center;
+			text-shadow: 0 0 1px #333;
+			float: right;
+		}
+		.btn-close:hover {
+			background-color: red;
+		}
+		.btn-min:hover {
+			background-color: rgba(240,240,240,0.6);
+		}
+		.btn-close:active {
+			background-color: #d44027;
+		}
+		.btn-min:active {
+			background-color: rgba(220,220,220,0.6);
+		}
+	}
+
+	.basic {
+		padding: 10px;
+		overflow: hidden;
+
+		.avatar {
+			width: 64px;
+			height: 64px;
+			border-radius: 4px;
+			box-shadow: 0 0 2px 1px #999;
+			cursor: pointer;
+			float: left;
+
+			&:hover {
+				box-shadow: 0 0 6px 2px #09a3dc;
+			}
+		}
+		.right {
+			padding: 0 6px;
+			float: left;
+
+			.nickname {
+				font-size: 14px;
+				font-weight: bold;
+			}
+			.signature {
+			    width: 160px;
+				font-size: 13px;
+				padding: 2px;
+			    border-radius: 2px;
+			    white-space: nowrap;
+			    text-overflow: ellipsis;
+			    overflow: hidden;
+
+				&:hover {
+					box-shadow: 0 0 2px #000;
+				}
+			}
+			.operations {
+
+				.operation {
+					color: #fdfdfd;
+					text-shadow: 0 0 2px #333;
+					padding: 0 3px;
+					display: inline-block;
+					border-radius: 2px;
+
+					&:hover {
+						box-shadow: 0 0 2px 1px #666;
+					}
+				}
+			}
+		}
+	}
+	.searchbar {
+		width: 100%;
+		padding: 6px 10px;
+		background-color: rgba(80, 80, 80, 0.4);
+		border-bottom: 1px solid #ddd;
+		position: absolute;
+		bottom: 0;
+
+		&.searching {
+			background-color: #fff;
+
+			input {
+				color: #000;
+			}
+			i {
+				color: rgb(225, 150, 160);
+
+				&:hover {
+					color: rgba(225, 150, 160, 0.8);
+				}
+				&:active {
+					color: rgb(200, 115, 135);
+				}
+			}
+		}
+		input {
+			width: 86%;
+			color: #fcfcfc;
+			font-size: 12px;
+			background: transparent;
+			border: none;
+			outline: none;
+			float: left;
+		}
+		::-webkit-input-placeholder {
+			color: rgba(0, 0, 0, 0.9);
+		}
+		i {
+			color: rgba(0, 0, 0, 0.9);
+			font-size: 18px;
+			position: absolute;
+			right: 28px;
+			top: 2px;
+
+			&:hover {
+				color: #fcfcfc;
+			}
+		}
+	}
+}
+
+.main {
+	height: calc(100% - 174px);  // 140+34
+
+	.contact-tabs {
+		height: 36px;
+		// padding: 2px 0;
+		// border-bottom: 1px solid #ddd;
+		overflow: hidden;
+	    display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: center;
+		border: none;
+
+		.tab {
+			width: 100%;
+			color: #ccc;
+			font-size: 24px;
+			text-align: center;
+		    line-height: 35px;
+			border-bottom: 1px solid #ddd;
+			transition: none;
+
+			&:hover {
+				color: rgba(9, 163, 220, 0.6);
+			}
+			&:active {
+				color: rgb(9, 140, 188);
+			}
+			&.selected {
+				color: rgb(9, 163, 220);
+				position: relative;
+
+				&:after {
+					content: '';
+					width: 8px;
+					height: 8px;
+					box-shadow: 0 0 1px #999;
+					background-color: #fdfdfd;
+					transform: rotate(-45deg);
+					position: absolute;
+					left: calc(50% - 4px);
+					bottom: -5px;
+					z-index: 9;
+				}
+			}
+		}
+	}
+
+	.contact-slider {
+		height: calc(100% - 36px);  // tab的高度
+	}
+	.list {
+		height: 100%;
+    	overflow-y: scroll;
+
+		.item {
+			padding: 8px;
+			border-bottom: 1px solid #ddd;
+			overflow: hidden;
+
+			&:hover {
+				background-color: rgba(252, 235, 165, 0.7);
+
+				.avatar {
+					box-shadow: 0 0 2px 1px #999;
+				}
+			}
+			&.selected {
+				background-color: rgb(252, 235, 165);
+				border-bottom: 1px solid rgb(232, 214, 145);
+
+				.avatar {
+					box-shadow: 0 0 4px 1px #09a3dc;
+				}
+			}
+			.avatar {
+				width: 40px;
+				border-radius: 2px;
+				float: left;
+			}
+			.right {
+				margin-left: 50px;
+				overflow: hidden;
+
+				.wrap {
+					overflow: hidden;
+
+					.nickname {
+						font-size: 14px;
+						float: left;
+					}
+					.time {
+						color: #999;
+						font-size: 12px;
+						float: right;
+					}
+				}
+				.content {
+					color: #999;
+					font-size: 12px;
+					margin-top: 5px;
+					white-space: nowrap;
+					overflow: hidden;
+				}
+			}
+		}
+	}
+}
+
+.search-panel {
+	height: calc(100% - 196px);
+	font-size: 12px;
+
+	.result-text {
+		color: #999;
+		padding: 0 10px;
+		padding-top: 4px;
+
+		&.empty {
+			text-align: center;
+		}
+	}
+	.list {
+		height: 100%;
+		overflow-y: scroll;
+
+		.item {
+			padding: 4px 10px;
+			overflow: hidden;
+
+			&:hover {
+				background-color: rgba(252, 235, 165, 0.7)
+			}
+			&.selected {
+				background-color: rgb(252, 235, 165)
+			}
+			.avatar {
+				width: 25px;
+				border-radius: 3px;
+				float: left;
+			}
+			.right {
+				padding: 3px;
+				padding-left: 8px;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+	}
+}
+
+.bottom {
+	width: calc(100% - 10px);
+	padding: 5px;
+	background-color: rgb(255, 250, 250);
+	border-top: 1px solid #ddd;
+	position: absolute;
+	bottom: 0;
+
+	.item {
+		color: rgb(124, 170, 200);
+		font-size: 22px;
+		line-height: 24px;
+		display: inline-block;
+		padding: 0 6px;
+		border-radius: 2px;
+
+		&:hover {
+			color: rgb(40, 140, 222);
+			box-shadow: 0 0 2px #333;
+		}
+	}
+}

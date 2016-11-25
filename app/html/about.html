@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>关于</title>
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/common-window.css">
+	<link rel="stylesheet" type="text/css" href="../css/ionicons/css/ionicons.min.css">
+	<style>
+		html, body{
+			border-radius: 2px;
+		}
+		.main {
+			padding: 18px;
+		}
+		.main p {
+			font-size: 13px;
+			margin: 4px 0;
+		}
+		.main p a {
+			color: orangered;
+			cursor: pointer;
+			-webkit-app-region: no-drag;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="top">
+		<div class="title">
+			<img src="../img/icon/icon.png" alt="Logo">
+			<div>关于</div>
+		</div>
+		<div class="button btn-close ion-close" title="关闭" onclick="hide()"></div>
+		<div class="button btn-min ion-minus" title="最小化" onclick="minimize()"></div>
+	</div>
+	<div class="main">
+		<p>应用名称：宝贝娜（Babyna）</p>
+		<p>应用版本：v0.3.161124</p>
+		<p>应用描述：爱贝娜平台的桌面聊天应用</p>
+		<p>作者：菜菜</p>
+		<p>主页：<a href="javascript:openHomePage();">http://isasha.me/</a></p>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+	const electron = require('electron')
+	const shell = electron.shell
+	const remote = electron.remote
+	const BrowserWindow = remote.BrowserWindow
+
+	let currentWindow = remote.getCurrentWindow()
+
+	function hide() {
+		currentWindow.hide()
+		currentWindow.center()
+	}
+
+	function minimize() {
+		currentWindow.minimize()
+	}
+
+	function openHomePage() {
+		shell.openExternal('http://isasha.me/')
+	}
+</script>
+</html>

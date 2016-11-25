@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>头像查看</title>
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/avatar-view.css">
+	<link rel="stylesheet" type="text/css" href="../css/ionicons/css/ionicons.min.css">
+</head>
+<body>
+<div class="container">
+	<div class="close ion-android-close" @click="close"></div>
+	<img v-bind:src="avatar" alt="头像大图预览" draggable="false" 
+		@mousewheel="wheelScale" @click="close">
+</div>
+</body>
+<script type="text/javascript" src="../js/lib/vue.js"></script>
+<script type="text/javascript">
+	const electron = require('electron')
+	const ipcRenderer = electron.ipcRenderer
+	const remote = electron.remote
+
+	let currentWindow = remote.getCurrentWindow()
+
+	ipcRenderer.on('avatar-view', function(event, avatar) {
+		vm.view(avatar)
+	})
+
+	let vm = new Vue({
+		el: '.container',
+		data: {
+			avatar: '',
+			initWidth: 0,
+			scale: 0
+		},
+		methods: {
+			view: function(avatar) {
+				let that = this
+				let img = new Image()
+				img.onload = function() {
+					that.avatar = avatar
+					that.initWidth = img.width
+					that.scale = 0
+					document.querySelector('.container img').style.width = that.initWidth + 'px'
+				}
+				img.src = avatar
+				currentWindow.setSize(700, 500)
+				currentWindow.center()
+				currentWindow.show()
+			},
+			close: function() {
+				currentWindow.hide()
+			},
+			wheelScale: function(event) {
+				if (event.deltaX > 0 || event.deltaY > 0) {
+					if (this.scale > -10) {
+						this.scale -= 2
+					}
+				} else {
+					if (this.scale < 50) {
+						this.scale += 2
+					}
+				}
+				let img = event.target
+				img.style.width = 'calc(' + this.initWidth + 'px + ' + this.scale + '%)'
+			}
+		}
+	})
+</script>
+</html>

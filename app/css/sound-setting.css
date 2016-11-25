@@ -1,0 +1,37 @@
+.main {
+  font-size: 13px;
+  padding: 20px 60px; }
+  .main i {
+    color: #aaa;
+    font-size: 16px;
+    float: left; }
+  .main .ion-android-checkbox, .main .ion-android-radio-button-on {
+    color: #59c72e; }
+  .main .wrap {
+    width: 60%;
+    line-height: 21px;
+    overflow: hidden;
+    cursor: pointer; }
+    .main .wrap * {
+      cursor: pointer; }
+    .main .wrap div {
+      padding-left: 6px;
+      float: left; }
+    .main .wrap:hover i {
+      color: rgba(89, 199, 46, 0.7); }
+    .main .wrap:active i {
+      color: #4fa92c; }
+  .main .setting-child {
+    padding-left: 30px;
+    margin-top: 6px;
+    position: relative; }
+    .main .setting-child.disabled {
+      -webkit-filter: grayscale(1);
+      filter: grayscale(1); }
+    .main .setting-child .overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 9; }

@@ -1,0 +1,52 @@
+.main {
+	font-size: 13px;
+	padding: 20px 60px;
+
+	i {
+		color: #aaa;
+		font-size: 16px;
+		float: left;
+	}
+	.ion-android-checkbox, .ion-android-radio-button-on {
+		color: rgb(89, 199, 46);
+	}
+	
+	.wrap {
+		width: 60%;
+		line-height: 21px;
+		overflow: hidden;
+		cursor: pointer;
+		
+		* {
+			cursor: pointer;
+		}
+		div {
+			padding-left: 6px;
+			float: left;
+		}
+		&:hover i {
+			color: rgba(89, 199, 46, 0.7);
+		}
+		&:active i {
+			color: rgb(79, 169, 44);
+		}
+	}
+	.setting-child {
+		padding-left: 30px;
+		margin-top: 6px;
+		position: relative;
+
+		&.disabled {
+			-webkit-filter: grayscale(1);
+			filter: grayscale(1);
+		}
+		.overlay {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 9;
+		}
+	}
+}

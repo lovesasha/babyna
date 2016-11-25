@@ -1,0 +1,178 @@
+body {
+  -webkit-app-region: drag; }
+
+.button, input, span, i, p {
+  transition: 0.4s;
+  -webkit-app-region: no-drag; }
+
+.container {
+  height: 100%;
+  background-color: #ebf2f9; }
+
+.top {
+  height: 184px; }
+  .top .toolbar {
+    width: 100%;
+    float: left; }
+    .top .toolbar .button {
+      width: 28px;
+      height: 28px;
+      line-height: 30px;
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      text-shadow: 0 0 1px #333;
+      float: right; }
+    .top .toolbar .btn-close:hover {
+      background-color: red; }
+    .top .toolbar .btn-min:hover {
+      background-color: #eee; }
+    .top .toolbar .btn-close:active {
+      background-color: #d44027; }
+    .top .toolbar .btn-min:active {
+      background-color: #ccc; }
+  .top .backdrop {
+    width: 100%;
+    height: 184px;
+    background: url(../img/backdrop.png);
+    background-size: auto 100%;
+    transition: all 300ms; }
+
+.main {
+  padding: 12px;
+  overflow: hidden;
+  transition: all 400ms; }
+  .main.entering {
+    padding-top: 32px;
+    transform: translateY(-20px); }
+    .main.entering .avatar {
+      transform: translateX(130px);
+      z-index: 9; }
+    .main.entering .inputbox {
+      opacity: 0;
+      transition-delay: 0ms !important; }
+    .main.entering .checkboxes {
+      opacity: 0;
+      transition-delay: 0ms !important; }
+    .main.entering .links {
+      opacity: 0;
+      transition-delay: 0ms !important; }
+  .main .avatar {
+    width: 80px;
+    height: 80px;
+    margin-left: 32px;
+    border-radius: 4px;
+    background: url(../img/icons/logo.png) no-repeat center;
+    background-size: 100% 100%;
+    position: relative;
+    float: left;
+    transition: all ease-in-out 300ms; }
+    .main .avatar.hide {
+      opacity: 0; }
+    .main .avatar.fade-in {
+      opacity: 1; }
+    .main .avatar .nickname {
+      width: 200%;
+      color: #666;
+      font-size: 14px;
+      text-align: center;
+      position: absolute;
+      bottom: -20px;
+      left: -50%; }
+    .main .avatar .refesh {
+      padding: 2px;
+      line-height: 14px;
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      transform: scale(0.8); }
+      .main .avatar .refesh:hover {
+        box-shadow: 0 0 1px 1px #999; }
+      .main .avatar .refesh:active {
+        box-shadow: 0 0 1px 1px #666; }
+        .main .avatar .refesh:active i {
+          background-color: #4a801b; }
+      .main .avatar .refesh i {
+        padding: 0 4px;
+        color: #fff;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle;
+        background-color: #5fb41b;
+        border-radius: 50%;
+        transform: translateY(-2px); }
+  .main .form {
+    width: 194px;
+    margin: 0 12px;
+    float: left; }
+    .main .form .inputbox {
+      position: relative;
+      overflow: hidden;
+      transition-delay: 300ms; }
+      .main .form .inputbox:first-child input {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px; }
+      .main .form .inputbox:nth-child(2) input {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px; }
+      .main .form .inputbox input {
+        width: 93%;
+        font-size: 13px;
+        padding: 5px 6px;
+        border: 1px solid #d1d1d1;
+        float: left;
+        outline: none; }
+        .main .form .inputbox input:hover {
+          border-color: #3cc3f5; }
+        .main .form .inputbox input:focus {
+          border-color: #09a3dc; }
+      .main .form .inputbox i {
+        color: #b1b1b1;
+        font-size: 18px;
+        position: absolute;
+        right: 8px;
+        top: 2px; }
+    .main .form .checkboxes {
+      color: #656565;
+      font-size: 12px;
+      margin: 6px 0;
+      overflow: hidden;
+      transition-delay: 300ms; }
+      .main .form .checkboxes div:hover i {
+        color: #3cc3f5; }
+      .main .form .checkboxes div:active i {
+        color: #098cbc; }
+      .main .form .checkboxes .left {
+        float: left; }
+      .main .form .checkboxes .right {
+        float: right; }
+      .main .form .checkboxes i {
+        font-size: 16px; }
+        .main .form .checkboxes i.ion-android-checkbox {
+          color: #09a3dc; }
+    .main .form .login {
+      color: white;
+      font-size: 12px;
+      text-align: center;
+      padding: 7px;
+      margin-top: 10px;
+      background-color: #09a3dc;
+      border-radius: 4px; }
+      .main .form .login:hover {
+        background-color: #3cc3f5; }
+      .main .form .login:active {
+        background-color: #098cbc; }
+  .main .links {
+    overflow: hidden;
+    transition-delay: 300ms; }
+    .main .links p {
+      width: 50px;
+      color: #09a3dc;
+      font-size: 12px;
+      padding: 6px 0;
+      overflow: hidden;
+      cursor: pointer; }
+      .main .links p:hover {
+        color: #3cc3f5; }
+      .main .links p:active {
+        color: #098cbc; }

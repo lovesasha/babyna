@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Babyna登录</title>
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/login.css">
+	<link rel="stylesheet" type="text/css" href="../css/ionicons/css/ionicons.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/fontawesome/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+	<div class="top">
+		<div class="toolbar">
+			<div class="button btn-close ion-close" title="关闭" v-on:click="close"></div>
+			<div class="button btn-min ion-minus" title="最小化" v-on:click="minimize"></div>
+		</div>
+		<div class="backdrop" :class="{entering: entering}"></div>
+	</div>
+	<div class="main" :class="{entering: entering}">
+		<div class="avatar" :style="{backgroundImage: 'url(' + avatar + ')'}"
+			:class="{'hide': avatarHide, 'fade-in': avatarLoaded, entering: entering}">
+			<div class="refesh" @click="refreshAvatar" v-if="! entering">
+				<i class="ion-android-refresh"></i>
+			</div>
+			<div class="nickname" v-if="entering">{{username}}</div>
+		</div>
+		<div class="form">
+			<div class="inputbox">
+				<input type="text" class="username" maxlength="10" 
+					placeholder="请输入昵称" v-model="username" @keyup.enter="login">
+				<i class="ion-android-arrow-dropdown"></i>
+			</div>
+			<div class="inputbox">
+				<input type="password" class="password" maxlength="18" 
+					placeholder="无需密码" readonly="readonly" v-model="password" @keyup.enter="login">
+				<i class="ion-card"></i>
+			</div>
+			<div class="checkboxes">
+				<div class="left" v-on:click="rememberPwd">
+					<i :class="shouldRememberPwd ? 'ion-android-checkbox' : 'ion-android-checkbox-outline-blank'"></i>
+					<span>记住密码</span>
+				</div>
+				<div class="right" v-on:click="autoLogin">
+					<i :class="shouldAutoLogin ? 'ion-android-checkbox' : 'ion-android-checkbox-outline-blank'"></i>
+					<span>自动登录</span>
+				</div>
+			</div>
+			<!-- <div class="button login" v-on:click="login">{{entering ? '取&emsp;消' : '登&emsp;录'}}</div> -->
+			<div class="button login" v-if="!entering" v-on:click="login">{{'登&emsp;录'}}</div>
+		</div>
+		<div class="links">
+			<p v-on:click="register">注册账号</p>
+			<p v-on:click="forgetpwd">忘记密码</p>
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="../js/login.js"></script>
+</html>

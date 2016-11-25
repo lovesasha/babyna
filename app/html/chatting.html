@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>聊天窗口</title>
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/chatting.css">
+	<link rel="stylesheet" type="text/css" href="../css/ionicons/css/ionicons.min.css">
+</head>
+<body>
+<div class="backdrop"></div>
+<div class="container" 
+			@mousemove="resizeChattingArea"
+			@mouseup="resizeAreaEnd"
+			@mouseleave="resizeAreaEnd">
+	<div class="top">
+		<div class="basic">
+			<img v-bind:src="basic.avatar" v-bind:alt="basic.nickname" class="avatar" @click="avatarView()">
+			<div class="wrap">
+				<div class="nickname">{{basic.nickname}}</div>
+				<div class="signature" v-bind:title="basic.signature">{{basic.signature}}</div>
+				<!-- <input class="signature" type="text" v-model="basic.signature"/> -->
+			</div>
+		</div>
+		<div class="toolbar">
+			<div class="button btn-close ion-close" title="关闭" @click="close"></div>
+			<div class="button btn-max ion-laptop" title="最大化" v-if="!maximized" @click="maximizeOrRestore"></div>
+			<div class="button btn-max ion-ios-browsers-outline" title="还原" v-if="maximized" @click="maximizeOrRestore"></div>
+			<div class="button btn-min ion-minus" title="最小化" @click="minimize"></div>
+			<div class="button btn-min ion-arrow-down-b" title="窗口设置" 
+				@click="windowSetting" @contextmenu="windowSetting"></div>
+		</div>
+		<div class="interaction">
+			<div class="item ion-folder" title="发送文件"></div>
+			<div class="item ion-share" title="分享用户"></div>
+			<div class="item ion-person-add" title="加为好友"></div>
+		</div>
+	</div>
+	<div class="main">
+		<div class="chat-row" v-for="(message, index) in messageList">
+			<div class="message-time" v-if="!message.system && 
+					(index == 0 || messageList[index].time - messageList[index - 1].time > 3 * 60 *1000)">
+				{{message.time | time}}
+			</div>
+			<div class="chat-message" :class="{'message-self': message.self}" v-if="!message.system">
+				<img class="avatar" v-bind:src="message.avatar" v-bind:alt="message.nickname" @click="avatarView(message)">
+				<!-- if包含子元素需要用template包裹起来！！！ -->
+				<template v-if="basic.id == 1 && !message.self">
+					<div class="group"><!-- 群聊需要展示昵称 -->
+						<div class="nickname">{{message.nickname}}</div>
+						<div class="message-content" v-html="message.content"></div>
+					</div>
+				</template>
+				<div v-else class="message-content" v-html="message.content"></div>
+			</div>
+			<div class="system" v-if="message.system">
+				<span>
+					<span class="time" v-if="message.time">{{message.time | time}}</span>
+					<span>{{message.content}}</span>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="bottom">
+		<div class="pull-line" 
+			@mousedown="resizeAreaStart"
+			></div>
+		<div class="chatting-tool">
+			<i class="ion-android-happy" title="选择表情"></i>
+			<i class="item ion-image" title="发送图片"></i>
+			<i class="right ion-android-time" title="聊天记录">
+				<span>聊天记录</span>
+			</i>
+		</div>
+		<div class="chatting-content" contenteditable="contenteditable" style="height: 60px;"
+			@keypress="enterSendMessage"
+			@paste="chattingContentEvent"
+			@contextmenu="chattingContentEvent"
+			@dragenter="chattingContentEvent"
+			@dragover="chattingContentEvent"
+			@dragleave="chattingContentEvent"
+			@drop="chattingContentEvent"></div>
+		<div class="chatting-opt">
+			<div class="button btn-close" @click="close" title="关闭">关闭</div>
+			<div class="button btn-send" @click="sendMessage"
+				v-bind:title="messageSendCode == 0 ? '按Enter键发送消息' : '按Ctrl+Enter键发送消息'">发送</div>
+			<div class="button btn-arrow ion-arrow-down-b" title="发送设置"
+				@click="sendSetting" @contextmenu="sendSetting"></div>
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="../js/chatting.js"></script>
+</html>

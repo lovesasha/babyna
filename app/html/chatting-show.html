@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>切换场景秀</title>
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/common-window.css">
+	<link rel="stylesheet" type="text/css" href="../css/chatting-show.css">
+	<link rel="stylesheet" type="text/css" href="../css/ionicons/css/ionicons.min.css">
+</head>
+<body>
+<div class="container">
+	<div class="top">
+		<div class="title">
+			<img src="../img/icon/icon.png" alt="Logo">
+			<div>切换场景秀</div>
+		</div>
+		<div class="button btn-close ion-close" title="关闭" onclick="hide()"></div>
+		<div class="button btn-min ion-minus" title="最小化" onclick="minimize()"></div>
+	</div>
+	<div class="main">
+		作者偷下懒，等多收集一些好看的场景秀再做，欢迎推荐精致的场景秀~
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="../js/lib/vue.js"></script>
+<script type="text/javascript">
+	const electron = require('electron')
+	const remote = electron.remote
+	const BrowserWindow = remote.BrowserWindow
+
+	let currentWindow = remote.getCurrentWindow()
+
+	function hide() {
+		currentWindow.hide()
+		currentWindow.center()
+	}
+
+	function minimize() {
+		currentWindow.minimize()
+	}
+</script>
+</html>

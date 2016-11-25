@@ -1,0 +1,1 @@
+cd ../electron && electron ../babyna

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>音效设置</title>
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/common-window.css">
+	<link rel="stylesheet" type="text/css" href="../css/sound-setting.css">
+	<link rel="stylesheet" type="text/css" href="../css/ionicons/css/ionicons.min.css">
+</head>
+<body>
+<div class="container">
+	<div class="top">
+		<div class="title">
+			<img src="../img/icon/icon.png" alt="Logo">
+			<div>音效设置</div>
+		</div>
+		<div class="button btn-close ion-close" title="关闭" v-on:click="close"></div>
+		<div class="button btn-min ion-minus" title="最小化" v-on:click="minimize"></div>
+	</div>
+	<div class="main">
+		<div class="setting">
+			<div class="checkbox">
+				<div class="wrap" @click="checkNotice">
+					<i :class="soundNotice ? 'ion-android-checkbox' : 'ion-android-checkbox-outline-blank'"></i>
+					<div>收到消息时声音提示</div>
+				</div>
+			</div>
+			<div class="setting-child" :class="{disabled : !soundNotice}">
+				<div class="overlay" v-show="!soundNotice"></div>
+				<div class="radio" v-for="(option, index) in options">
+					<div class="wrap" @click="checkOption(index)">
+						<i :class="option.checked ? 'ion-android-radio-button-on': 'ion-android-radio-button-off'"></i>
+						<div class="option">{{option.label}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="../js/lib/vue.js"></script>
+<script type="text/javascript">
+	const electron = require('electron')
+	const remote = electron.remote
+	const BrowserWindow = remote.BrowserWindow
+	const path = require('path')
+
+	const storage = require(path.join(__dirname, '../js/util/storage'))
+
+	// 窗口信息
+	let currentWindow = remote.getCurrentWindow()
+	let mainWindow = BrowserWindow.fromId(2)
+
+
+	let vm = new Vue({
+		el: '.container',
+		data: {
+			soundNotice: true,
+			options: [
+				{label: '滴滴', checked: false},
+				{label: '回荡', checked: false},
+				{label: '日语', checked: false},
+				{label: '水泡', checked: false},
+				{label: '微信', checked: false},
+				{label: '微博', checked: true},
+				{label: '麦当劳', checked: false},
+				{label: '地铁进站', checked: false},
+				{label: '开心消消乐', checked: false}
+			]
+		},
+		methods: {
+			close: function() {
+				currentWindow.hide()
+				currentWindow.center()
+			},
+			minimize: function() {
+				currentWindow.minimize()
+			},
+			checkNotice: function() {
+				this.soundNotice = ! this.soundNotice
+				// 切换音效并固化到本地
+				let soundSetting = {
+					soundName: currentSource,
+					soundNotice: this.soundNotice
+				}
+				mainWindow.webContents.send('sound-setting', soundSetting)
+				storage.set('soundSetting', soundSetting)
+			},
+			checkOption: function(index) {
+				this.options.forEach(function(item) {
+					item.checked = false
+				})
+				this.options[index].checked = true
+				playSound(this.options[index].label)
+				// 切换音效并固化到本地
+				let soundSetting = {
+					soundName: this.options[index].label,
+					soundNotice: this.soundNotice
+				}
+				mainWindow.webContents.send('sound-setting', soundSetting)
+				storage.set('soundSetting', soundSetting)
+			}
+		}
+	})
+
+	let soundAudio
+	let currentSource
+	let soundSetting = storage.get('soundSetting')
+	if (soundSetting) {
+		if (! soundSetting.soundName) {
+			soundSetting.soundName = '微博'
+		}
+		currentSource = soundSetting.soundName
+		vm.options.forEach(function(item, index) {
+			if (item.label == soundSetting.soundName) {
+				item.checked = true
+			} else {
+				item.checked = false
+			}
+		})
+		vm.soundNotice = soundSetting.soundNotice
+	}
+	// 播放音效
+	function playSound(soundName) {
+		if (soundName == currentSource) {
+			soundAudio.currentTime = 0
+		} else {
+			soundAudio = new Audio(path.join(__dirname, '../sound/' + soundName + '.mp3'))
+		}
+		soundAudio.play()
+		currentSource = soundName
+	}
+</script>
+</html>

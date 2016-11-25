@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../../css/widget/contextmenu.css">
+	<link rel="stylesheet" type="text/css" href="../../css/ionicons/css/ionicons.min.css">
+</head>
+<body>
+<div class="container">
+	<div class="list">
+		<div class="item" v-for="(item, index) in menuItems"
+				@click="itemClick(index)">
+			<div class="left" :class="{separator: item.type == 'separator'}">
+				<div class="icon">
+					<i v-if="item.icon" :class="item.icon"></i>
+				</div>
+			</div>
+			<div class="right">
+				<div class="separator" v-if="item.type == 'separator'"></div>
+				<div class="label" v-if="!item.type || item.type != 'separator'">{{item.label}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="../../js/lib/vue.js"></script>
+<script type="text/javascript">
+	const electron = require('electron')
+	const ipcRenderer = electron.ipcRenderer
+	const remote = electron.remote
+	const BrowserWindow = remote.BrowserWindow
+
+	let html = document.querySelector('html')
+
+	let fromWindowId
+
+	ipcRenderer.on('set-menu-items', function(event, items, windowId) {
+		vm.setMenuItems(items)
+		/*let len = 0
+		for (let item in items) {
+			if (items[item].type != 'separator') len ++
+		}
+		if (len == 1) {
+			html.style.height = '26px'
+		} else if (len == 2) {
+			html.style.height = '50px'
+		} else {
+			html.style.height = 26*len-(2*len-3) + 'px'
+		}*/
+
+		fromWindowId = windowId
+	})
+
+	let vm = new Vue({
+		el: '.container',
+		data: {
+			menuItems: []
+		},
+		methods: {
+			setMenuItems: function(items) {
+				this.menuItems = items
+			},
+			itemClick: function(index) {
+				let fromWindow = BrowserWindow.fromId(fromWindowId)
+				fromWindow.webContents.send('menu-item-click', index)
+			}
+		}
+	})
+</script>
+</html>

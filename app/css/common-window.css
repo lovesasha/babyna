@@ -1,0 +1,47 @@
+@charset "UTF-8";
+body {
+  -webkit-app-region: drag; }
+
+/* 不可拖动区域及元素 */
+.button, input, i, .checkbox *, .radio * {
+  transition: 0.4s;
+  -webkit-app-region: no-drag; }
+
+.container {
+  height: 100%;
+  background-color: #fdfdfd; }
+
+.top {
+  color: #fff;
+  background-color: #f8525a;
+  overflow: hidden; }
+  .top .title {
+    padding: 6px 8px;
+    float: left;
+    overflow: hidden; }
+    .top .title img {
+      width: 18px;
+      display: block;
+      float: left; }
+    .top .title div {
+      font-size: 13px;
+      line-height: 18px;
+      margin-left: 6px;
+      float: left; }
+  .top .button {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+    text-shadow: 0 0 1px #333;
+    float: right; }
+  .top .btn-close:hover {
+    background-color: red; }
+  .top .btn-min:hover {
+    background-color: rgba(240, 240, 240, 0.6); }
+  .top .btn-close:active {
+    background-color: #d44027; }
+  .top .btn-min:active {
+    background-color: rgba(220, 220, 220, 0.6); }

@@ -1,0 +1,39 @@
+body {
+  -webkit-app-region: drag; }
+
+.container {
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden; }
+
+img {
+  display: block;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: -webkit-grab;
+  -webkit-app-region: no-drag; }
+
+.close {
+  width: 36px;
+  height: 36px;
+  color: #fff;
+  font-size: 24px;
+  text-align: center;
+  line-height: 36px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 9;
+  transition: all 0.4s;
+  -webkit-app-region: no-drag; }
+  .close:hover {
+    background-color: red; }
+  .close:active {
+    background-color: #d43f27; }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Babyna主界面</title>
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+	<link rel="stylesheet" type="text/css" href="../css/ionicons/css/ionicons.min.css">
+</head>
+<body>
+<div class="container">
+	<div class="top">
+		<div class="toolbar">
+			<div class="icon">
+				<img src="../img/icon/icon.png" alt="Logo">
+				<span>Babyna</span>
+			</div>
+			<div class="button btn-close ion-close" title="关闭" v-on:click="close"></div>
+			<div class="button btn-min ion-minus" title="最小化" v-on:click="minimize"></div>
+		</div>
+		<div class="basic">
+			<img class="avatar" v-bind:src="basic.avatar" v-bind:alt="basic.nickname" @click="avatarView">
+			<div class="right">
+				<div class="nickname">{{basic.nickname}}</div>
+				<div class="signature" v-bind:title="basic.signature">{{basic.signature}}</div>
+				<div class="operations">
+					<!-- 暂时只有一个 -->
+					<div class="operation ion-tshirt" title="切换场景秀" @click="mainOperation()"></div>
+				</div>
+			</div>
+		</div>
+		<div class="searchbar" :class="{searching: searcher != ''}">
+			<input type="text" placeholder="搜索联系人" maxlength="20" v-model="searcher">
+			<i class="ion-ios-search-strong" v-if="searcher == ''"></i>
+			<i class="ion-close-circled" v-if="searcher != ''" v-on:click="clearSearch"></i>
+		</div>
+	</div>
+	<div class="main" v-if="searcher == ''">
+		<div class="contact-tabs">
+			<div class="tab friends" :class="{selected: tabIndex == 1}" @click="tabSelect(1)">
+				<i class="ion-person"></i>
+			</div>
+			<div class="tab groups" :class="{selected: tabIndex == 2}" @click="tabSelect(2)">
+				<i class="ion-person-stalker"></i>
+			</div>
+			<div class="tab recents" :class="{selected: tabIndex == 3}" @click="tabSelect(3)">
+				<i class="ion-ios-timer"></i>
+			</div>
+		</div>
+		<div class="contact-slider">
+			<!-- 好友列表 -->
+			<!-- <div class="list contact-friends"></div> -->
+			<!-- 群组列表 -->
+			<div class="list contact-groups">
+				<div class="item contact" v-for="(contact, index) in recentList" :class="{selected: index == contactIndex.friends}" @click="contactItemSelect(1, index)" @dblclick="startChatting(contact)">
+					<img class="avatar" v-bind:src="contact.avatar" v-bind:alt="contact.nickname">
+					<div class="right">
+						<div class="wrap">
+							<div class="nickname">{{contact.nickname}}</div>
+							<div class="time">{{contact.time | time}}</div>
+						</div>
+						<div class="content">{{contact.content}}</div>
+					</div>
+				</div>
+			</div>
+			<!-- 最近聊天列表 -->
+			<!-- <div class="list contact-recents"></div> -->
+		</div>
+	</div>
+	<div class="search-panel" v-if="searcher != ''">
+		<div class="result-text empty" v-if="searchResult.length == 0">无本地搜索结果...</div>
+		<div class="result-text" v-if="searchResult.length > 0">好友</div>
+		<div class="list result-list">
+			<div class="item contact" v-for="(result, index) in searchResult" :class="{selected: index == contactIndex.search}" @click="contactItemSelect(9, index)" @dblclick="startChatting(result)">
+				<img class="avatar" v-bind:src="result.avatar" v-bind:alt="result.nickname">
+				<div class="right">
+					<span class="nickname">{{result.nickname}}</span>
+					<span class="remark" v-if="false">{{'{' + result.remark + '}'}}</span>
+					<span class="account">({{result.account}})</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bottom">
+		<div class="item" v-for="(item, index) in bottomItems" v-bind:title="item.title"
+			:class="item.icon" @click="bottomItemClick(index)"></div>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="../js/main.js"></script>
+</html>
